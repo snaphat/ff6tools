@@ -15,6 +15,20 @@ function ROMObject(rom, definition, parent) {
     this.observers = [];
 }
 
+var total_saved_bytes = 0;
+
+function apultra_encode(data) {
+    return apultra_pack(data, 0x10000);
+}
+
+function apultra_decode(data) {
+    if (data[0] == 0xFF && data[1] == 0xFF) {
+        return apultra_unpack(data);
+    } else {
+        return false;
+    }
+}
+
 ROMObject.Type = {
     array: "array",
     assembly: "assembly",
@@ -2825,9 +2839,25 @@ ROM.dataFormat = {
             dest[0] = d & 0xFF;
             dest[1] = (d >> 8) & 0xFF;
 
-            return [dest.slice(0, d), s - 0x0800];
+            var orig_encode = [dest.slice(0, d), s - 0x0800];
+            var ap_encode = apultra_encode(data);
+            var len = orig_encode[0].length - ap_encode[0].length;
+            if (len > -1) {
+                total_saved_bytes += len;
+                console.log("saves " + len  + " bytes");
+                return ap_encode;
+            }
+            else {
+                console.log("Original algorithm is smaller!");
+                return orig_encode;
+            }
         },
         decode: function(data) {
+            var ap_decode = apultra_decode(data);
+            if (ap_decode != false) {
+                return ap_decode;
+            }
+            // Original decode:
             var src = data;
             var s = 0; // source pointer
             var dest = new Uint8Array(0x10000);

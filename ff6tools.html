@@ -15,6 +15,8 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/css-element-queries/1.2.3/ResizeSensor.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/js-yaml/3.14.1/js-yaml.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/base64-js@1.5.1/base64js.min.js"></script>
+        <script src="lib/apultra.js"></script>
+        <script src="lib/apultra_wrapper.js"></script>
         <script src="lib/pzntg.js"></script>
         <script src="lib/rgbquant.js"></script>
         <script src="rom/gfx.js"></script>
@@ -360,6 +362,32 @@
                     propertyList.select(rom.mapProperties.item(0));
                 }
 
+                /* Map Layouts: */
+                //for (var i = 0; i < this.rom.mapLayouts.arrayLength ; i++) {
+                //    var layout = this.rom.mapLayouts.item(i);
+                //    layout.markAsDirty();
+                //}
+
+                /* Map TileSets: */
+                //for (var i = 0; i < this.rom.mapTilesets.arrayLength ; i++) {
+                //    var tilset = this.rom.mapTilesets.array[i];
+                //    tilset.markAsDirty();
+                //}
+
+                /* Battle Backgrounds: */
+                //for (var i = 0; i < this.rom.battleBackgroundLayout.arrayLength ; i++) {
+                //    var layout = this.rom.battleBackgroundLayout.item(i);
+                //    layout.markAsDirty();
+                //}
+
+                /* World map layouts: */
+                //var layout = this.rom.worldLayout1;
+                //layout.markAsDirty();
+                //var layout = this.rom.worldLayout2;
+                //layout.markAsDirty();
+                //var layout = this.rom.worldLayout3;
+                //layout.markAsDirty();
+
                 // rom.expandMode = 'optimize';
                 //
                 // // test compression
@@ -468,6 +496,7 @@
                     // see FileSaver.js
                     saveAs(content, `${rom.name}.zip`);
                 });
+                console.debug("Total Savings: " + total_saved_bytes);
             }
 
             function chooseExpandMode() {
